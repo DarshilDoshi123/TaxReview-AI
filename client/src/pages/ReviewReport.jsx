@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import toast from 'react-hot-toast';
-import axios from 'axios';
 import { 
   FileText, 
   User, 
@@ -45,10 +44,7 @@ const ReviewReport = () => {
     setDownloading(true);
     const toastId = toast.loading('Generating professional PDF report...');
     try {
-      const url = `/reports/${reviewId}/pdf`;
-      const response = await axios.get(url, {
-        responseType: "blob"
-      });
+      const response = await api.reports.downloadPDF(reviewId);
 
       const blob = new Blob([response.data], {
         type: "application/pdf"

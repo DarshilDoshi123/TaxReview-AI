@@ -1,6 +1,14 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'https://taxreview-ai-api.onrender.com/api');
+let baseUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'https://taxreview-ai-api.onrender.com/api');
+
+// Normalize base URL: strip trailing slashes and ensure it ends with /api
+baseUrl = baseUrl.replace(/\/+$/, '');
+if (baseUrl && !baseUrl.endsWith('/api')) {
+  baseUrl = baseUrl + '/api';
+}
+
+axios.defaults.baseURL = baseUrl;
 
 // Request interceptor to dynamically inject the JWT Bearer token
 axios.interceptors.request.use(
