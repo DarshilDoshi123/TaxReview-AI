@@ -1,0 +1,24 @@
+const express = require('express');
+const {
+  getClients,
+  getClientById,
+  createClient,
+  updateClient,
+  deleteClient,
+} = require('../controllers/clientController');
+const { protect } = require('../middleware/authMiddleware');
+
+const router = express.Router();
+
+router.use(protect); // Secure all client routes
+
+router.route('/')
+  .get(getClients)
+  .post(createClient);
+
+router.route('/:id')
+  .get(getClientById)
+  .put(updateClient)
+  .delete(deleteClient);
+
+module.exports = router;

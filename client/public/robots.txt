@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Allow: /features
+Allow: /supported-documents
+Allow: /income-tax-guide
+Allow: /blog
+Allow: /blog/
+Allow: /faq
+Allow: /developer
+Allow: /privacy
+Allow: /terms
+
+Disallow: /clients
+Disallow: /clients/
+Disallow: /upload
+Disallow: /reviews/
+Disallow: /documents/
+Disallow: /reports/
+Disallow: /settings
+
+Sitemap: https://taxreviewai.com/sitemap.xml
