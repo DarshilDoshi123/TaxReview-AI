@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import SEO from '../../components/SEO';
+import { SITE_URL } from '../../config/site';
 import { blogArticles } from './blogData';
 import { 
   ArrowLeft, 
@@ -295,7 +296,7 @@ const BlogArticle = () => {
       "name": "TaxReview AI",
       "logo": {
         "@type": "ImageObject",
-        "url": `${window.location.origin}/logo.png`
+        "url": `${SITE_URL}/logo.png`
       }
     }
   };

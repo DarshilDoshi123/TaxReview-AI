@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import SEO from '../../components/SEO';
+import { SITE_URL } from '../../config/site';
 import { blogArticles } from './blogData';
 import { 
   FileText, 
@@ -134,6 +135,7 @@ const Home = () => {
     "operatingSystem": "All",
     "applicationCategory": "BusinessApplication",
     "description": "AI-Powered Income Tax Review System. Audits Form 16, AIS, Form 26AS, and tax notices instantly.",
+    "url": SITE_URL,
     "offers": {
       "@type": "Offer",
       "price": "0.00",
@@ -222,7 +224,7 @@ const Home = () => {
                 <span className="h-3 w-3 rounded-full bg-green-400 block" />
               </div>
               <div className="bg-slate-100 dark:bg-slate-950 px-8 py-1 rounded-md text-[10px] text-slate-400 font-mono tracking-tight select-none">
-                https://app.taxreviewai.com/dashboard/{activeTab}
+                {SITE_URL}/dashboard/{activeTab}
               </div>
               <div className="w-12" />
             </div>

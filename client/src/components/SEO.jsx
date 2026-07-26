@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { SITE_URL } from '../config/site';
 
 const SEO = ({
   title,
@@ -37,13 +38,23 @@ const SEO = ({
       element.setAttribute('href', href);
     };
 
+    // Helper to format absolute URLs using SITE_URL configuration
+    const toAbsoluteUrl = (pathOrUrl) => {
+      if (!pathOrUrl) {
+        const path = typeof window !== 'undefined' ? window.location.pathname : '';
+        return `${SITE_URL}${path}`;
+      }
+      if (pathOrUrl.startsWith('http://') || pathOrUrl.startsWith('https://')) return pathOrUrl;
+      return `${SITE_URL}${pathOrUrl.startsWith('/') ? '' : '/'}${pathOrUrl}`;
+    };
+
     // 2. Description
     const defaultDesc = 'Transform your income tax auditing with TaxReview AI. Automate document checks, detect tax risks, find missing deductions, and generate professional PDF audit reports instantly.';
     const finalDesc = description || defaultDesc;
     setMetaTag('name', 'description', finalDesc);
 
     // 3. Canonical Link
-    const currentUrl = canonicalUrl || window.location.href;
+    const currentUrl = toAbsoluteUrl(canonicalUrl);
     setLinkTag('canonical', currentUrl);
 
     // 4. Open Graph Meta Tags
@@ -51,13 +62,13 @@ const SEO = ({
     setMetaTag('property', 'og:description', finalDesc);
     setMetaTag('property', 'og:type', ogType);
     setMetaTag('property', 'og:url', currentUrl);
-    setMetaTag('property', 'og:image', ogImage.startsWith('http') ? ogImage : `${window.location.origin}${ogImage}`);
+    setMetaTag('property', 'og:image', toAbsoluteUrl(ogImage));
 
     // 5. Twitter Card Meta Tags
     setMetaTag('name', 'twitter:card', 'summary_large_image');
     setMetaTag('name', 'twitter:title', title || 'TaxReview AI - AI Income Tax Auditing');
     setMetaTag('name', 'twitter:description', finalDesc);
-    setMetaTag('name', 'twitter:image', ogImage.startsWith('http') ? ogImage : `${window.location.origin}${ogImage}`);
+    setMetaTag('name', 'twitter:image', toAbsoluteUrl(ogImage));
 
     // 6. JSON-LD Structured Data
     let scriptElement = document.getElementById('json-ld-structured-data');

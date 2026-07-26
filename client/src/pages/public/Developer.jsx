@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import SEO from '../../components/SEO';
+import { SITE_URL } from '../../config/site';
 import { 
   Github, 
   Linkedin, 
@@ -156,7 +157,7 @@ const Developer = () => {
     "name": "Darshil Doshi",
     "jobTitle": "Full Stack Developer",
     "description": "Portfolio of Darshil Doshi, a Full Stack Developer specializing in MERN Stack, responsive web applications, modern UI/UX, and AI-powered web solutions.",
-    "url": window.location.origin,
+    "url": SITE_URL,
     "sameAs": [
       "https://github.com/DarshilDoshi123",
       "https://linkedin.com/in/darshildoshi-placeholder"

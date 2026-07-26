@@ -18,4 +18,4 @@ Disallow: /documents/
 Disallow: /reports/
 Disallow: /settings
 
-Sitemap: https://taxreviewai.com/sitemap.xml
+Sitemap: __VITE_SITE_URL__/sitemap.xml
