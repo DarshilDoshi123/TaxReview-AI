@@ -25,6 +25,7 @@ app.use('/api/documents', require('./routes/documentRoutes'));
 app.use('/api/reviews', require('./routes/reviewRoutes'));
 app.use('/api/dashboard', require('./routes/dashboardRoutes'));
 app.use('/api/reports', require('./routes/reportRoutes'));
+app.use('/api/visits', require('./routes/visitRoutes'));
 
 // Root path test route
 app.get('/', (req, res) => {

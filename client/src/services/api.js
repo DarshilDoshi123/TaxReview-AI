@@ -94,6 +94,10 @@ const api = {
     get: (reviewId) => axios.get(`/reports/${reviewId}`),
     generate: (docId) => axios.post('/reports/generate', { documentId: docId }),
     downloadPDF: (reviewId) => axios.get(`/reports/${reviewId}/pdf`, { responseType: 'blob' }),
+  },
+  visits: {
+    get: () => axios.get('/visits'),
+    track: () => axios.post('/visits/track'),
   }
 };
 

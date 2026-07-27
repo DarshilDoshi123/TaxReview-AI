@@ -42,15 +42,48 @@ const Home = () => {
     totalClients: 0,
     totalDocuments: 0,
     totalReviews: 0,
+    totalVisits: 0,
   });
 
   React.useEffect(() => {
     let isMounted = true;
     const fetchLiveStats = async () => {
       try {
-        const response = await api.dashboard.publicStats();
-        if (isMounted && response.data?.data) {
-          setLiveStats(response.data.data);
+        const [publicStatsRes, visitsRes] = await Promise.allSettled([
+          api.dashboard.publicStats(),
+          api.visits.get(),
+        ]);
+
+        let users = 0;
+        let clients = 0;
+        let documents = 0;
+        let reviews = 0;
+        let visits = 0;
+
+        if (publicStatsRes.status === 'fulfilled' && publicStatsRes.value?.data?.data) {
+          const data = publicStatsRes.value.data.data;
+          users = data.totalUsers || 0;
+          clients = data.totalClients || 0;
+          documents = data.totalDocuments || 0;
+          reviews = data.totalReviews || 0;
+          if (typeof data.totalVisits === 'number') visits = data.totalVisits;
+        }
+
+        if (visitsRes.status === 'fulfilled' && visitsRes.value?.data) {
+          const vData = visitsRes.value.data;
+          if (typeof vData.totalVisits === 'number') {
+            visits = vData.totalVisits;
+          }
+        }
+
+        if (isMounted) {
+          setLiveStats((prev) => ({
+            totalUsers: users || prev.totalUsers || 0,
+            totalClients: clients || prev.totalClients || 0,
+            totalDocuments: documents || prev.totalDocuments || 0,
+            totalReviews: reviews || prev.totalReviews || 0,
+            totalVisits: visits || prev.totalVisits || 0,
+          }));
         }
       } catch (err) {
         console.warn('Could not fetch live database stats:', err.message);
@@ -355,16 +388,16 @@ const Home = () => {
           <div className="mt-16 pt-12 border-t border-slate-200/60 dark:border-slate-800/60 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <AnimatedSection variant="fade-up" delay={0.1}>
               <span className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                <AnimatedCounter end={liveStats.totalUsers} duration={2} />
+                <AnimatedCounter end={liveStats.totalVisits} duration={2} />
               </span>
-              <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block mt-1">Registered Users & CAs</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block mt-1">Website Visits</span>
             </AnimatedSection>
 
             <AnimatedSection variant="fade-up" delay={0.2}>
               <span className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                <AnimatedCounter end={liveStats.totalClients} duration={2} />
+                <AnimatedCounter end={liveStats.totalUsers} duration={2} />
               </span>
-              <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block mt-1">Client Portfolios Managed</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block mt-1">Registered Users & CAs</span>
             </AnimatedSection>
 
             <AnimatedSection variant="fade-up" delay={0.3}>

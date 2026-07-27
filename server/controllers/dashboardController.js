@@ -2,6 +2,7 @@ const Client = require('../models/Client');
 const Document = require('../models/Document');
 const Review = require('../models/Review');
 const User = require('../models/User');
+const Visit = require('../models/Visit');
 const mongoose = require('mongoose');
 
 /**
@@ -15,6 +16,8 @@ const getPublicStats = async (req, res, next) => {
     const totalClients = await Client.countDocuments({});
     const totalDocuments = await Document.countDocuments({});
     const totalReviews = await Review.countDocuments({});
+    const visitDoc = await Visit.findOne({ name: 'site_visits' });
+    const totalVisits = visitDoc ? visitDoc.totalVisits : 0;
 
     res.status(200).json({
       success: true,
@@ -23,6 +26,7 @@ const getPublicStats = async (req, res, next) => {
         totalClients,
         totalDocuments,
         totalReviews,
+        totalVisits,
         averageReviewTime: 30,
       },
     });

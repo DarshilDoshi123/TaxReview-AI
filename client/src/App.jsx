@@ -15,6 +15,7 @@ import DocumentDetail from './pages/DocumentDetail';
 import Settings from './pages/Settings';
 import ReviewReport from './pages/ReviewReport';
 import PendingReviews from './pages/PendingReviews';
+import { trackVisitOnLoad } from './utils/visitTracker';
 
 // Lazy Loaded Public Components
 const PublicLayout = lazy(() => import('./layouts/PublicLayout'));
@@ -92,6 +93,10 @@ const ScrollToTop = () => {
 };
 
 function App() {
+  useEffect(() => {
+    trackVisitOnLoad();
+  }, []);
+
   return (
     <AuthProvider>
       <Router>
