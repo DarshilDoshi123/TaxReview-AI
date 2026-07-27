@@ -3,6 +3,8 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
+import ScrollProgress from '../components/common/ScrollProgress';
+import PageTransition from '../components/common/PageTransition';
 
 const DashboardLayout = () => {
   const { user, loading } = useAuth();
@@ -39,6 +41,9 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50/50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative">
+      {/* Scroll Reading Progress Bar */}
+      <ScrollProgress />
+
       {/* Ambient background glows */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-40 dark:opacity-60">
         <div className="absolute -left-[10%] -top-[10%] h-[600px] w-[600px] rounded-full bg-primary-500/5 blur-[150px] dark:bg-primary-500/10" />
@@ -59,8 +64,10 @@ const DashboardLayout = () => {
 
         {/* Dashboard page views */}
         <main className="flex-1 p-4 md:p-6 lg:p-8 z-10">
-          <div className="mx-auto max-w-7xl animate-scale-up">
-            <Outlet />
+          <div className="mx-auto max-w-7xl">
+            <PageTransition>
+              <Outlet />
+            </PageTransition>
           </div>
         </main>
       </div>

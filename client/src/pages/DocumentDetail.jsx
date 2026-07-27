@@ -60,7 +60,15 @@ const DocumentDetail = () => {
   };
 
   const handlePrint = () => {
-    window.print();
+    const originalTitle = document.title;
+    document.title = 'TaxReview AI - AI Income Tax Auditing & Reviews';
+
+    setTimeout(() => {
+      window.print();
+      setTimeout(() => {
+        document.title = originalTitle;
+      }, 1000);
+    }, 50);
   };
 
   if (loading) {

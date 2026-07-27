@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import ScrollProgress from '../components/common/ScrollProgress';
+import PageTransition from '../components/common/PageTransition';
 import { 
   FileText, 
   Menu, 
@@ -8,9 +11,6 @@ import {
   Sun, 
   Moon, 
   ChevronRight, 
-  Github, 
-  Linkedin, 
-  Mail, 
   ShieldCheck 
 } from 'lucide-react';
 
@@ -51,8 +51,11 @@ const PublicLayout = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative">
       
+      {/* Scroll Reading Progress Bar */}
+      <ScrollProgress />
+
       {/* Dynamic Background Effects */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-40 dark:opacity-60">
         <div className="absolute -left-[10%] top-[5%] h-[600px] w-[600px] rounded-full bg-primary-500/5 blur-[150px] dark:bg-primary-500/10" />
@@ -151,64 +154,80 @@ const PublicLayout = () => {
       </header>
 
       {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-30 lg:hidden">
-          {/* Backdrop overlay */}
-          <div className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
-          
-          <div className="fixed top-16 inset-x-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-6 flex flex-col space-y-4 shadow-2xl animate-fade-in">
-            <nav className="flex flex-col space-y-1.5">
-              {navLinks.map((link) => (
-                <NavLink
-                  key={link.path}
-                  to={link.path}
-                  className={({ isActive }) =>
-                    `px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${
-                      isActive
-                        ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/30 dark:text-primary-400'
-                        : 'text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-900/60'
-                    }`
-                  }
-                >
-                  {link.name}
-                </NavLink>
-              ))}
-            </nav>
-
-            <div className="h-px bg-slate-100 dark:bg-slate-900 my-2" />
-
-            <div className="flex flex-col space-y-3 pt-2">
-              {user ? (
-                <Link
-                  to="/"
-                  className="w-full text-center rounded-xl bg-gradient-to-r from-primary-600 to-indigo-600 py-3 text-sm font-bold text-white shadow-lg shadow-primary-500/20"
-                >
-                  Go to Dashboard
-                </Link>
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    className="w-full text-center rounded-xl border border-slate-200 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-900"
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-30 lg:hidden">
+            {/* Backdrop overlay */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm" 
+              onClick={() => setMobileMenuOpen(false)} 
+            />
+            
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed top-16 inset-x-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-6 flex flex-col space-y-4 shadow-2xl z-40"
+            >
+              <nav className="flex flex-col space-y-1.5">
+                {navLinks.map((link) => (
+                  <NavLink
+                    key={link.path}
+                    to={link.path}
+                    className={({ isActive }) =>
+                      `px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${
+                        isActive
+                          ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/30 dark:text-primary-400'
+                          : 'text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-900/60'
+                      }`
+                    }
                   >
-                    Sign In
-                  </Link>
+                    {link.name}
+                  </NavLink>
+                ))}
+              </nav>
+
+              <div className="h-px bg-slate-100 dark:bg-slate-900 my-2" />
+
+              <div className="flex flex-col space-y-3 pt-2">
+                {user ? (
                   <Link
-                    to="/register"
-                    className="w-full text-center rounded-xl bg-gradient-to-r from-primary-600 to-indigo-600 py-3 text-sm font-bold text-white shadow-lg"
+                    to="/"
+                    className="w-full text-center rounded-xl bg-gradient-to-r from-primary-600 to-indigo-600 py-3 text-sm font-bold text-white shadow-lg shadow-primary-500/20"
                   >
-                    Get Started
+                    Go to Dashboard
                   </Link>
-                </>
-              )}
-            </div>
+                ) : (
+                  <>
+                    <Link
+                      to="/login"
+                      className="w-full text-center rounded-xl border border-slate-200 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-900"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      to="/register"
+                      className="w-full text-center rounded-xl bg-gradient-to-r from-primary-600 to-indigo-600 py-3 text-sm font-bold text-white shadow-lg"
+                    >
+                      Get Started
+                    </Link>
+                  </>
+                )}
+              </div>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
       {/* Public Pages Viewport Outlet */}
       <main className="flex-grow z-10 relative">
-        <Outlet />
+        <PageTransition>
+          <Outlet />
+        </PageTransition>
       </main>
 
       {/* Premium Public Footer */}
@@ -265,10 +284,6 @@ const PublicLayout = () => {
 
           <div className="flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400">
             <p>&copy; {new Date().getFullYear()} TaxReview AI. All rights reserved. | Designed & Developed by Darshil Doshi</p>
-            <div className="flex items-center space-x-2 mt-4 md:mt-0 bg-slate-100 dark:bg-slate-900 px-3 py-1.5 rounded-full">
-              <ShieldCheck className="h-4 w-4 text-green-500" />
-              <span>ISO 27001 Compliant & TLS 1.3 Encryption Standard</span>
-            </div>
           </div>
         </div>
       </footer>

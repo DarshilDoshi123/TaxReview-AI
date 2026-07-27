@@ -361,6 +361,17 @@ const Clients = () => {
                   <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Date of Birth</label>
                   <input
                     type="date"
+                    min="1900-01-01"
+                    max="2099-12-31"
+                    onInput={(e) => {
+                      if (e.target.value) {
+                        const parts = e.target.value.split('-');
+                        if (parts[0] && parts[0].length > 4) {
+                          parts[0] = parts[0].slice(0, 4);
+                          e.target.value = parts.join('-');
+                        }
+                      }
+                    }}
                     className="block w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm dark:border-slate-800 bg-transparent dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all cursor-pointer"
                     {...register('dateOfBirth')}
                   />

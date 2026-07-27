@@ -277,7 +277,7 @@ const DocumentUpload = () => {
                     <File className="h-6 w-6" />
                   </div>
                   <div className="space-y-1">
-                    <h4 className="text-sm font-bold text-slate-800 dark:text-slate-105 truncate max-w-xs sm:max-w-md">{selectedFile.name}</h4>
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white truncate max-w-xs sm:max-w-md">{selectedFile.name}</h4>
                     <p className="text-xs font-semibold text-slate-500">{(selectedFile.size / 1024).toFixed(1)} KB &bull; PDF</p>
                   </div>
                 </div>

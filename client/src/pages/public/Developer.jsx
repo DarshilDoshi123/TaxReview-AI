@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import SEO from '../../components/SEO';
 import { SITE_URL } from '../../config/site';
+import AnimatedSection, { AnimatedStaggerContainer, AnimatedStaggerItem } from '../../components/common/AnimatedSection';
+import MagneticButton from '../../components/common/MagneticButton';
 import { 
   Github, 
   Linkedin, 
@@ -27,7 +29,10 @@ import {
   CheckCircle,
   Monitor,
   Lightbulb,
-  Rocket
+  Rocket,
+  Building,
+  LayoutDashboard,
+  UserCheck
 } from 'lucide-react';
 
 const Developer = () => {
@@ -160,7 +165,7 @@ const Developer = () => {
     "url": SITE_URL,
     "sameAs": [
       "https://github.com/DarshilDoshi123",
-      "https://linkedin.com/in/darshildoshi-placeholder"
+      "https://www.linkedin.com/in/darshiltdoshi"
     ]
   };
 
@@ -207,13 +212,6 @@ const Developer = () => {
                   Request a Quote
                 </button>
                 <a
-                  href="mailto:darshiltdoshi1@gmail.com"
-                  className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-200 rounded-xl px-5 py-3 text-xs font-bold transition-all duration-200 inline-flex items-center gap-1.5"
-                >
-                  <Mail className="h-4 w-4" />
-                  <span>Email Me</span>
-                </a>
-                <a
                   href="https://github.com/DarshilDoshi123"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -223,7 +221,7 @@ const Developer = () => {
                   <span>View GitHub</span>
                 </a>
                 <a
-                  href="https://linkedin.com/in/darshildoshi-placeholder"
+                  href="https://www.linkedin.com/in/darshiltdoshi"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-200 rounded-xl px-5 py-3 text-xs font-bold transition-all duration-200 inline-flex items-center gap-1.5"
@@ -640,34 +638,56 @@ const Developer = () => {
       {/* ====================================================
           SECTION 7 — WORK WITH ME (PROMO)
           ==================================================== */}
-      <section className="py-16 md:py-24 border-t border-slate-100 dark:border-slate-900 bg-slate-50/20 dark:bg-slate-950/20">
-        <div className="mx-auto max-w-5xl px-4 md:px-8">
-          <div className="text-center space-y-3 mb-16">
-            <span className="text-[10px] font-bold text-primary-500 uppercase tracking-widest block">Collaborate</span>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Let's Build Your Next Project</h2>
-            <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto text-sm leading-relaxed font-semibold">
-              Need a modern website, business website, portfolio, admin dashboard, or full stack web application? Let's discuss your idea, understand your requirements, estimate the project scope, timeline, and pricing, and build something amazing together.
+      <section className="py-16 md:py-24 border-t border-slate-200/60 dark:border-slate-800/60 bg-slate-50/50 dark:bg-slate-900/40">
+        <div className="mx-auto max-w-6xl px-4 md:px-8">
+          <AnimatedSection variant="fade-up" className="text-center space-y-3 mb-16">
+            <span className="text-[10px] font-bold text-primary-600 dark:text-primary-400 uppercase tracking-widest block">Collaborate</span>
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">Let's Build Your Next Project</h2>
+            <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-sm leading-relaxed font-medium">
+              Need a modern website, business website, portfolio, admin dashboard, or full stack web application? Let's discuss your idea, estimate project scope, timeline, and pricing, and build something amazing together.
             </p>
-          </div>
+          </AnimatedSection>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <AnimatedStaggerContainer className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
             {[
-              'Business Website',
-              'Company Website',
-              'Portfolio Website',
-              'MERN Stack Application',
-              'Admin Dashboard',
-              'AI Web App',
-              'Custom Web Application'
-            ].map((projName, idx) => (
-              <div 
-                key={idx} 
-                className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 rounded-xl text-center shadow-sm hover:scale-102 hover:border-primary-500/20 transition-all duration-300"
-              >
-                <span className="text-xs font-bold text-slate-700 dark:text-slate-300">{projName}</span>
-              </div>
-            ))}
-          </div>
+              { projName: 'Business Website', icon: Globe, serviceKey: 'Business Website' },
+              { projName: 'Company Website', icon: Building, serviceKey: 'Company Website' },
+              { projName: 'Portfolio Website', icon: UserCheck, serviceKey: 'Portfolio Website' },
+              { projName: 'MERN Stack App', icon: Code, serviceKey: 'MERN Stack Application' },
+              { projName: 'Admin Dashboard', icon: LayoutDashboard, serviceKey: 'Admin Dashboard' },
+              { projName: 'AI Web App', icon: Cpu, serviceKey: 'AI Web App' },
+              { projName: 'Landing Pages', icon: Layers, serviceKey: 'Landing Pages' },
+              { projName: 'Custom Application', icon: Sparkles, serviceKey: 'Custom Web Application' }
+            ].map((proj, idx) => {
+              const IconComp = proj.icon;
+              return (
+                <AnimatedStaggerItem key={idx}>
+                  <button
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, service: proj.serviceKey }));
+                      scrollToQuote();
+                    }}
+                    className="w-full text-left p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/70 shadow-sm hover-card-rise glass-card group transition-all duration-300 flex flex-col justify-between space-y-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="p-2.5 rounded-xl bg-primary-500/10 text-primary-600 dark:text-primary-400 group-hover:bg-primary-500 group-hover:text-white transition-colors duration-200">
+                        <IconComp className="h-5 w-5" />
+                      </div>
+                      <ArrowRight className="h-4 w-4 text-slate-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-200" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                        {proj.projName}
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-medium block mt-0.5">
+                        Select & Request Quote &rarr;
+                      </span>
+                    </div>
+                  </button>
+                </AnimatedStaggerItem>
+              );
+            })}
+          </AnimatedStaggerContainer>
         </div>
       </section>
 
@@ -866,11 +886,10 @@ const Developer = () => {
             <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Connect With Me</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {[
               { icon: Github, label: 'GitHub', username: 'DarshilDoshi123', link: 'https://github.com/DarshilDoshi123' },
-              { icon: Linkedin, label: 'LinkedIn', username: 'Darshil Doshi', link: 'https://linkedin.com/in/darshildoshi-placeholder' },
-              { icon: Mail, label: 'Email', username: 'darshiltdoshi1@gmail.com', link: 'mailto:darshiltdoshi1@gmail.com' }
+              { icon: Linkedin, label: 'LinkedIn', username: 'Darshil Doshi', link: 'https://www.linkedin.com/in/darshiltdoshi' }
             ].map((ch, idx) => {
               const Icon = ch.icon;
               return (

@@ -1,5 +1,6 @@
 const express = require('express');
 const {
+  getPublicStats,
   getDashboardStats,
   getRecentActivity,
   getMonthlyStats,
@@ -10,7 +11,11 @@ const { protect } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.use(protect); // Secure all dashboard routes
+// Public platform statistics route (unprotected for landing page)
+router.get('/public-stats', getPublicStats);
+
+// Secure all other dashboard routes
+router.use(protect);
 
 router.get('/stats', getDashboardStats);
 router.get('/activity', getRecentActivity);

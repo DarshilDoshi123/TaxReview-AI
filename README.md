@@ -247,4 +247,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Developed by **Darshil Doshi** as a Full-Stack MERN project.
 
-[GitHub](https://github.com/darshiltdoshi) | [LinkedIn](https://www.linkedin.com/in/darshil-doshi/)
+[GitHub](https://github.com/darshiltdoshi) | [LinkedIn](https://www.linkedin.com/in/darshiltdoshi)

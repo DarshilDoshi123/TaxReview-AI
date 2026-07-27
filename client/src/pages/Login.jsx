@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
-import { FileText, Mail, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { FileText, Mail, Lock, Eye, EyeOff, ArrowLeft, AlertCircle } from 'lucide-react';
 
 const Login = () => {
   const { login } = useAuth();
@@ -11,6 +11,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [authError, setAuthError] = useState(null);
 
   const {
     register: registerField,
@@ -20,6 +21,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
+    setAuthError(null);
     const loadingToast = toast.loading('Authenticating credentials...');
     
     const result = await login(data.email, data.password);
@@ -34,7 +36,9 @@ const Login = () => {
       }, 250);
     } else {
       setIsSubmitting(false);
-      toast.error(result.error);
+      const errorMsg = result.error || 'Invalid email or password. Please try again.';
+      setAuthError(errorMsg);
+      toast.error(errorMsg);
     }
   };
 
@@ -86,6 +90,14 @@ const Login = () => {
           </p>
         </div>
 
+        {/* Authentication Error Banner */}
+        {authError && (
+          <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs flex items-center space-x-3 shadow-lg shadow-red-500/5 animate-fade-in">
+            <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
+            <span className="font-semibold leading-relaxed">{authError}</span>
+          </div>
+        )}
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
             {/* Email Address */}
@@ -102,11 +114,12 @@ const Login = () => {
                   type="email"
                   autoComplete="email"
                   className={`block w-full rounded-xl border bg-slate-950/60 py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all duration-200 ${
-                    errors.email ? 'border-red-500 focus:ring-red-500/50' : 'border-slate-800'
+                    errors.email || authError ? 'border-red-500/80 focus:ring-red-500/50' : 'border-slate-800'
                   }`}
                   placeholder="name@company.com"
                   {...registerField('email', {
                     required: 'Email is required',
+                    onChange: () => authError && setAuthError(null),
                     pattern: {
                       value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
                       message: 'Enter a valid email address',
@@ -133,11 +146,12 @@ const Login = () => {
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   className={`block w-full rounded-xl border bg-slate-950/60 py-3 pl-11 pr-10 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all duration-200 ${
-                    errors.password ? 'border-red-500 focus:ring-red-500/50' : 'border-slate-800'
+                    errors.password || authError ? 'border-red-500/80 focus:ring-red-500/50' : 'border-slate-800'
                   }`}
                   placeholder="••••••••"
                   {...registerField('password', {
                     required: 'Password is required',
+                    onChange: () => authError && setAuthError(null),
                     minLength: {
                       value: 6,
                       message: 'Password must be at least 6 characters',

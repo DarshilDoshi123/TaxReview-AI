@@ -593,6 +593,22 @@ const runTaxReview = async (filePath, documentType, clientDetails) => {
   
   try {
     textContent = await extractTextFromPDF(filePath);
+
+    // Auto-update client PAN from extracted PDF text if current PAN is a placeholder
+    if (clientDetails && clientDetails._id && clientDetails.panNumber && clientDetails.panNumber.startsWith('TEMPA')) {
+      const panMatch = textContent.match(/([A-Z]{5}[0-9]{4}[A-Z]{1})/i);
+      if (panMatch && panMatch[1]) {
+        const extractedPan = panMatch[1].toUpperCase();
+        try {
+          const ClientModel = require('../models/Client');
+          await ClientModel.findByIdAndUpdate(clientDetails._id, { panNumber: extractedPan });
+          clientDetails.panNumber = extractedPan;
+          console.log(`Auto-updated client ${clientDetails.fullName} PAN to extracted PAN: ${extractedPan}`);
+        } catch (err) {
+          console.warn('Auto-updating client PAN failed:', err.message);
+        }
+      }
+    }
   } catch (error) {
     console.error('PDF text extraction failed:', error.message);
     const msg = error.message;

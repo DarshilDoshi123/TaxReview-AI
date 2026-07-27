@@ -43,12 +43,15 @@ const ClientDetail = () => {
       if (client.dateOfBirth) {
         dobString = new Date(client.dateOfBirth).toISOString().split('T')[0];
       }
+      const isTempPan = client.panNumber?.startsWith('TEMPA');
+      const isTempMobile = client.mobileNumber === '9999999999';
+
       reset({
         fullName: client.fullName,
-        panNumber: client.panNumber,
+        panNumber: isTempPan ? '' : client.panNumber,
         email: client.email,
-        mobileNumber: client.mobileNumber,
-        address: client.address || '',
+        mobileNumber: isTempMobile ? '' : client.mobileNumber,
+        address: client.address === 'Not Provided' ? '' : (client.address || ''),
         dateOfBirth: dobString,
         notes: client.notes || '',
       });
@@ -103,6 +106,9 @@ const ClientDetail = () => {
       try {
         const docsRes = await api.documents.list(id);
         setDocuments(docsRes.data.data);
+        // Also refresh client profile in case AI extracted/updated PAN number
+        const clientRes = await api.clients.get(id);
+        setClient(clientRes.data.data);
       } catch (err) {
         console.error('Error polling documents status:', err);
       }
@@ -160,7 +166,6 @@ const ClientDetail = () => {
     const date = new Date(timestamp);
     if (isNaN(date.getTime())) return 'Upload time unavailable';
     try {
-      // Format: DD/MM/YYYY, HH:MM AM/PM or similar localized style
       return date.toLocaleString(undefined, {
         day: '2-digit',
         month: '2-digit',
@@ -221,7 +226,7 @@ const ClientDetail = () => {
                   <h1 className="text-2xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">{client.fullName}</h1>
                   <div className="flex flex-wrap gap-2 pt-1">
                     <span className="bg-primary-500/10 dark:bg-primary-500/15 text-primary-700 dark:text-primary-400 border border-primary-500/20 px-2.5 py-0.5 rounded-lg text-xs font-bold font-mono tracking-wider uppercase">
-                      PAN: {client.panNumber}
+                      {client.panNumber?.startsWith('TEMPA') ? 'PAN: Not Set (Extracted on Upload)' : `PAN: ${client.panNumber}`}
                     </span>
                     {client.dateOfBirth && (
                       <span className="flex items-center text-xs font-semibold text-slate-500 bg-slate-50 dark:bg-slate-800 px-2.5 py-0.5 rounded-lg border border-slate-200/50 dark:border-slate-800">
@@ -260,7 +265,9 @@ const ClientDetail = () => {
               </div>
               <div className="flex items-center space-x-2.5">
                 <Phone className="h-4 w-4 text-slate-400" />
-                <span className="text-slate-800 dark:text-slate-300">{client.mobileNumber}</span>
+                <span className="text-slate-800 dark:text-slate-300">
+                  {client.mobileNumber === '9999999999' ? 'Not Provided' : client.mobileNumber}
+                </span>
               </div>
               {client.address && (
                 <div className="flex items-center space-x-2.5">
@@ -476,6 +483,17 @@ const ClientDetail = () => {
                   <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Date of Birth</label>
                   <input
                     type="date"
+                    min="1900-01-01"
+                    max="2099-12-31"
+                    onInput={(e) => {
+                      if (e.target.value) {
+                        const parts = e.target.value.split('-');
+                        if (parts[0] && parts[0].length > 4) {
+                          parts[0] = parts[0].slice(0, 4);
+                          e.target.value = parts.join('-');
+                        }
+                      }
+                    }}
                     className="block w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm dark:border-slate-800 bg-transparent dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all cursor-pointer"
                     {...register('dateOfBirth')}
                   />
