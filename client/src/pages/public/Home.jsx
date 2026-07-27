@@ -202,7 +202,30 @@ const Home = () => {
           }}
         />
 
-        <div className="mx-auto max-w-7xl px-4 md:px-8">
+        <div className="mx-auto max-w-7xl px-4 md:px-8 relative">
+
+          {/* Floating Decorative Document Icon (Left) */}
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute left-3 sm:left-6 md:left-10 lg:left-14 top-8 sm:top-12 md:top-16 z-10 pointer-events-none"
+          >
+            <div className="flex items-center justify-center p-2.5 sm:p-3.5 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800/80 shadow-xl backdrop-blur-md text-primary-500">
+              <FileText className="h-5 w-5 sm:h-6 sm:w-6" />
+            </div>
+          </motion.div>
+
+          {/* Floating Decorative AI/Gemini Sparkle Icon (Right) */}
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            className="absolute right-3 sm:right-6 md:right-10 lg:right-14 top-6 sm:top-10 md:top-12 z-10 pointer-events-none"
+          >
+            <div className="flex items-center justify-center p-2.5 sm:p-3.5 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800/80 shadow-xl backdrop-blur-md text-indigo-500 dark:text-indigo-400">
+              <Sparkles className="h-5 w-5 sm:h-6 sm:w-6" />
+            </div>
+          </motion.div>
+
           <div className="text-center space-y-6 max-w-4xl mx-auto">
             
             <AnimatedSection variant="fade-down">
