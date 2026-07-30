@@ -36,9 +36,10 @@ const DocumentUpload = () => {
     const fetchClients = async () => {
       try {
         const response = await api.clients.list();
-        setClients(response.data.data);
-        if (!selectedClientId && response.data.data.length > 0) {
-          setSelectedClientId(response.data.data[0]._id);
+        const clientList = Array.isArray(response.data?.data) ? response.data.data : [];
+        setClients(clientList);
+        if (!selectedClientId && clientList.length > 0) {
+          setSelectedClientId(clientList[0]._id);
         }
       } catch (err) {
         console.error('Error fetching clients:', err);

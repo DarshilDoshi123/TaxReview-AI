@@ -44,8 +44,9 @@ const Clients = () => {
   const fetchClients = async () => {
     try {
       const response = await api.clients.list();
-      setClients(response.data.data);
-      setFilteredClients(response.data.data);
+      const clientList = Array.isArray(response.data?.data) ? response.data.data : [];
+      setClients(clientList);
+      setFilteredClients(clientList);
     } catch (err) {
       console.error('Error fetching clients:', err);
       toast.error('Failed to retrieve client profiles');

@@ -74,8 +74,9 @@ const Dashboard = () => {
       if (user?.role === 'Client') {
         try {
           const clientsRes = await api.clients.list();
-          if (clientsRes.data.data.length > 0) {
-            setMyClient(clientsRes.data.data[0]);
+          const clientList = Array.isArray(clientsRes.data?.data) ? clientsRes.data.data : [];
+          if (clientList.length > 0) {
+            setMyClient(clientList[0]);
           }
         } catch (cErr) {
           console.error('Failed to load client profile:', cErr);

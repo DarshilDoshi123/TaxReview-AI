@@ -4,6 +4,7 @@ const Review = require('../models/Review');
 const User = require('../models/User');
 const Visit = require('../models/Visit');
 const mongoose = require('mongoose');
+const { getOrCreateClientProfile } = require('../utils/clientUtils');
 
 /**
  * @desc    Get public real-time platform statistics from MongoDB
@@ -47,20 +48,12 @@ const getDashboardStats = async (req, res, next) => {
     let reviewFilter = {};
 
     if (req.user.role === 'Client') {
-      let clientDoc = await Client.findOne({ email: req.user.email });
-      if (!clientDoc) {
-        clientDoc = await Client.create({
-          fullName: req.user.name,
-          email: req.user.email,
-          panNumber: 'TEMPA' + Math.floor(1000 + Math.random() * 9000) + 'T',
-          mobileNumber: '9999999999',
-          address: 'Not Provided',
-          createdBy: req.user._id,
-        });
+      const clientDoc = await getOrCreateClientProfile(req.user);
+      if (clientDoc) {
+        clientFilter._id = clientDoc._id;
+        docFilter.client = clientDoc._id;
+        reviewFilter.client = clientDoc._id;
       }
-      clientFilter._id = clientDoc._id;
-      docFilter.client = clientDoc._id;
-      reviewFilter.client = clientDoc._id;
     } else if (req.user.role === 'CA') {
       clientFilter.createdBy = req.user._id;
       docFilter.uploadedBy = req.user._id;

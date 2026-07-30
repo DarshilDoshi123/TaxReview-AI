@@ -3,6 +3,7 @@ const Document = require('../models/Document');
 const Review = require('../models/Review');
 const fs = require('fs');
 const path = require('path');
+const { getOrCreateClientProfile } = require('../utils/clientUtils');
 
 /**
  * @desc    Get all clients
@@ -14,18 +15,12 @@ const getClients = async (req, res, next) => {
     let query = {};
     
     if (req.user.role === 'Client') {
-      let clientProfile = await Client.findOne({ email: req.user.email });
-      if (!clientProfile) {
-        clientProfile = await Client.create({
-          fullName: req.user.name,
-          email: req.user.email,
-          panNumber: 'TEMPA' + Math.floor(1000 + Math.random() * 9000) + 'T',
-          mobileNumber: '9999999999',
-          address: 'Not Provided',
-          createdBy: req.user._id,
-        });
+      const clientProfile = await getOrCreateClientProfile(req.user);
+      if (clientProfile) {
+        query._id = clientProfile._id;
+      } else {
+        query.email = (req.user.email || '').toLowerCase();
       }
-      query.email = req.user.email;
     } else if (req.user.role !== 'Admin') {
       query.createdBy = req.user._id;
     }
@@ -35,7 +30,7 @@ const getClients = async (req, res, next) => {
     res.status(200).json({
       success: true,
       count: clients.length,
-      data: clients,
+      data: clients || [],
     });
   } catch (error) {
     next(error);
@@ -58,7 +53,9 @@ const getClientById = async (req, res, next) => {
 
     // Role checks
     if (req.user.role === 'Client') {
-      if (client.email !== req.user.email) {
+      const userEmail = (req.user.email || '').toLowerCase();
+      const clientEmail = (client.email || '').toLowerCase();
+      if (clientEmail !== userEmail && client.createdBy.toString() !== req.user._id.toString()) {
         res.status(403);
         throw new Error('Not authorized to access this client profile');
       }
