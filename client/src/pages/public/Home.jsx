@@ -168,20 +168,40 @@ const Home = () => {
     }
   ];
 
-  const homeSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "TaxReview AI",
-    "url": SITE_URL,
-    "description": "AI-Powered Income Tax Document Review & Compliance Platform for Indian Taxpayers.",
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "All"
-  };
+  const homeSchema = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "TaxReview AI",
+      "url": "https://tax-review-ai.vercel.app",
+      "inLanguage": "en",
+      "publisher": {
+        "@type": "Organization",
+        "name": "TaxReview AI",
+        "url": "https://tax-review-ai.vercel.app",
+        "logo": "https://tax-review-ai.vercel.app/android-chrome-512x512.png"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "TaxReview AI",
+      "url": "https://tax-review-ai.vercel.app",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "description": "AI-powered income tax auditing and document review platform that analyzes tax documents, identifies issues, provides compliance insights, and generates intelligent recommendations.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      }
+    }
+  ];
 
   return (
     <>
       <SEO 
-        title="TaxReview AI - Automated Income Tax Document Review & Compliance" 
+        title="TaxReview AI - AI Income Tax Auditing & Reviews" 
         description="Audit Form 16, AIS, Form 26AS, and tax notices automatically with AI. Identify tax mismatches, missing deductions, and generate compliance reports."
         schema={homeSchema}
       />
