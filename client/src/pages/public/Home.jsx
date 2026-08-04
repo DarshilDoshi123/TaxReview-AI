@@ -179,7 +179,10 @@ const Home = () => {
         "@type": "Organization",
         "name": "TaxReview AI",
         "url": "https://tax-review-ai.vercel.app",
-        "logo": "https://tax-review-ai.vercel.app/android-chrome-512x512.png"
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://tax-review-ai.vercel.app/android-chrome-512x512.png"
+        }
       }
     },
     {
@@ -202,7 +205,7 @@ const Home = () => {
     <>
       <SEO 
         title="TaxReview AI - AI Income Tax Auditing & Reviews" 
-        description="Audit Form 16, AIS, Form 26AS, and tax notices automatically with AI. Identify tax mismatches, missing deductions, and generate compliance reports."
+        description="AI-powered income tax auditing and document review platform that analyzes tax documents, detects issues, provides compliance insights, and generates intelligent recommendations."
         schema={homeSchema}
       />
 

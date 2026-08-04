@@ -52,7 +52,7 @@ const SEO = ({
     };
 
     // 2. Description
-    const defaultDesc = 'Transform your income tax auditing with TaxReview AI. Automate document checks, detect tax risks, find missing deductions, and generate professional PDF audit reports instantly.';
+    const defaultDesc = 'AI-powered income tax auditing and document review platform that analyzes tax documents, detects issues, provides compliance insights, and generates intelligent recommendations.';
     const finalDesc = description || defaultDesc;
     setMetaTag('name', 'description', finalDesc);
 
@@ -94,7 +94,10 @@ const SEO = ({
           "@type": "Organization",
           "name": "TaxReview AI",
           "url": "https://tax-review-ai.vercel.app",
-          "logo": "https://tax-review-ai.vercel.app/android-chrome-512x512.png"
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://tax-review-ai.vercel.app/android-chrome-512x512.png"
+          }
         }
       },
       {
