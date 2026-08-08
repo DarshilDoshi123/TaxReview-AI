@@ -214,18 +214,69 @@ const Home = () => {
           ==================================================== */}
       <section 
         onMouseMove={handleHeroMouseMove}
-        className="relative pt-16 md:pt-24 pb-20 md:pb-28 overflow-hidden border-b border-slate-200/60 dark:border-slate-800/60"
+        className="relative pt-16 md:pt-24 pb-20 md:pb-28 overflow-hidden border-b border-slate-200/60 dark:border-slate-800/60 bg-slate-50/50 dark:bg-slate-950"
       >
+        {/* Hero Background Design Extensions (Ambient Glows & Abstract SaaS/Tax Document Patterns) */}
+        <div className="hero-bg-container">
+          {/* Subtle Ambient Radial Glows */}
+          <div className="hero-glow-top-left" />
+          <div className="hero-glow-top-right" />
+          <div className="hero-glow-center" />
+          <div className="hero-glow-bottom" />
+
+          {/* Abstract Grid & Dot Pattern */}
+          <div className="hero-grid-pattern" />
+
+          {/* Faint Abstract Tax Document & AI Connector Vector Accents */}
+          <svg
+            className="hero-doc-accents w-full h-full"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="heroDocGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.1" />
+                <stop offset="100%" stopColor="#6366f1" stopOpacity="0.02" />
+              </linearGradient>
+              <linearGradient id="heroDocGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#a855f7" stopOpacity="0.14" />
+                <stop offset="100%" stopColor="#6366f1" stopOpacity="0.03" />
+              </linearGradient>
+            </defs>
+
+            {/* Left Abstract Document Frame Outline */}
+            <g className="opacity-50 dark:opacity-35" transform="translate(30, 80)">
+              <rect x="0" y="0" width="170" height="220" rx="16" stroke="url(#heroDocGradLight)" strokeWidth="1.5" strokeDasharray="6 4" className="dark:hidden" />
+              <rect x="0" y="0" width="170" height="220" rx="16" stroke="url(#heroDocGradDark)" strokeWidth="1.5" strokeDasharray="6 4" className="hidden dark:block" />
+              <line x1="24" y1="32" x2="80" y2="32" stroke="#8b5cf6" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" />
+              <line x1="24" y1="52" x2="135" y2="52" stroke="#6366f1" strokeOpacity="0.12" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="24" y1="68" x2="115" y2="68" stroke="#6366f1" strokeOpacity="0.1" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="24" y1="84" x2="140" y2="84" stroke="#6366f1" strokeOpacity="0.1" strokeWidth="1.5" strokeLinecap="round" />
+            </g>
+
+            {/* Right Abstract Document & Audit Connector */}
+            <g className="opacity-50 dark:opacity-35" transform="translate(1080, 60)">
+              <rect x="0" y="0" width="180" height="230" rx="16" stroke="url(#heroDocGradLight)" strokeWidth="1.5" strokeDasharray="6 4" className="dark:hidden" />
+              <rect x="0" y="0" width="180" height="230" rx="16" stroke="url(#heroDocGradDark)" strokeWidth="1.5" strokeDasharray="6 4" className="hidden dark:block" />
+              <rect x="24" y="30" width="60" height="7" rx="3.5" fill="#8b5cf6" fillOpacity="0.15" />
+              <rect x="24" y="48" width="130" height="5" rx="2.5" fill="#6366f1" fillOpacity="0.08" />
+              <rect x="24" y="62" width="105" height="5" rx="2.5" fill="#6366f1" fillOpacity="0.08" />
+              <rect x="24" y="76" width="120" height="5" rx="2.5" fill="#6366f1" fillOpacity="0.08" />
+            </g>
+          </svg>
+        </div>
+
         {/* Dynamic Mouse Tracking Radial Glow */}
         <div 
-          className="pointer-events-none absolute -z-10 h-[500px] w-[500px] rounded-full bg-primary-500/10 blur-[140px] transition-all duration-300 ease-out"
+          className="pointer-events-none absolute z-0 h-[500px] w-[500px] rounded-full bg-primary-500/10 blur-[140px] transition-all duration-300 ease-out"
           style={{
             left: `${mousePos.x - 250}px`,
             top: `${mousePos.y - 250}px`,
           }}
         />
 
-        <div className="mx-auto max-w-7xl px-4 md:px-8 relative">
+        <div className="mx-auto max-w-7xl px-4 md:px-8 relative z-10">
 
           {/* Floating Decorative Document Icon (Left) */}
           <motion.div

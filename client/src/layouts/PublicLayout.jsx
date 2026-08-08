@@ -14,6 +14,8 @@ import {
   ShieldCheck 
 } from 'lucide-react';
 
+import PageBackground from '../components/common/PageBackground';
+
 const PublicLayout = () => {
   const { user } = useAuth();
   const location = useLocation();
@@ -51,16 +53,13 @@ const PublicLayout = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden">
       
       {/* Scroll Reading Progress Bar */}
       <ScrollProgress />
 
-      {/* Dynamic Background Effects */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-40 dark:opacity-60">
-        <div className="absolute -left-[10%] top-[5%] h-[600px] w-[600px] rounded-full bg-primary-500/5 blur-[150px] dark:bg-primary-500/10" />
-        <div className="absolute right-[5%] top-[10%] h-[500px] w-[500px] rounded-full bg-indigo-500/5 blur-[130px] dark:bg-indigo-500/10" />
-      </div>
+      {/* Centralized Public Page Background System */}
+      <PageBackground variant="public" />
 
       {/* Sticky Header with Glassmorphism */}
       <header className="sticky top-0 z-40 w-full border-b border-slate-200/60 bg-white/80 px-4 md:px-8 py-3.5 backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-950/80 transition-all">

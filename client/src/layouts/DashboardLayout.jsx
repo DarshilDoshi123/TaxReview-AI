@@ -6,6 +6,8 @@ import Navbar from '../components/Navbar';
 import ScrollProgress from '../components/common/ScrollProgress';
 import PageTransition from '../components/common/PageTransition';
 
+import PageBackground from '../components/common/PageBackground';
+
 const DashboardLayout = () => {
   const { user, loading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -44,11 +46,8 @@ const DashboardLayout = () => {
       {/* Scroll Reading Progress Bar */}
       <ScrollProgress />
 
-      {/* Ambient background glows */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-40 dark:opacity-60">
-        <div className="absolute -left-[10%] -top-[10%] h-[600px] w-[600px] rounded-full bg-primary-500/5 blur-[150px] dark:bg-primary-500/10" />
-        <div className="absolute right-[5%] top-[20%] h-[450px] w-[450px] rounded-full bg-indigo-500/5 blur-[130px] dark:bg-indigo-500/10" />
-      </div>
+      {/* Centralized Application Page Background System */}
+      <PageBackground variant="app" />
 
       {/* Sidebar for navigation */}
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
