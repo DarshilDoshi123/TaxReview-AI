@@ -11,7 +11,7 @@ const AnimatedCounter = ({
   className = '',
 }) => {
   const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   // Parse numerical value from string if end contains letters/commas
   const numericVal = typeof end === 'number' ? end : parseFloat(String(end).replace(/[^0-9.]/g, '')) || 0;
@@ -20,6 +20,7 @@ const AnimatedCounter = ({
     <span ref={ref} className={className}>
       {isInView ? (
         <CountUp
+          key={`${isInView}-${numericVal}`}
           start={0}
           end={numericVal}
           duration={duration}

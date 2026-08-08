@@ -499,7 +499,7 @@ const Home = () => {
 
             <AnimatedSection variant="fade-up" delay={0.3}>
               <span className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                <AnimatedCounter end={30} suffix="s" duration={2} />
+                30s
               </span>
               <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block mt-1">Average Review Time</span>
             </AnimatedSection>
