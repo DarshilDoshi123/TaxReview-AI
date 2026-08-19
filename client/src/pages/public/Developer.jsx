@@ -6,8 +6,6 @@ import { SITE_URL } from '../../config/site';
 import AnimatedSection, { AnimatedStaggerContainer, AnimatedStaggerItem } from '../../components/common/AnimatedSection';
 import MagneticButton from '../../components/common/MagneticButton';
 import { 
-  Github, 
-  Linkedin, 
   Mail, 
   ArrowRight, 
   Check, 
@@ -162,11 +160,7 @@ const Developer = () => {
     "name": "Darshil Doshi",
     "jobTitle": "Full Stack Developer",
     "description": "Portfolio of Darshil Doshi, a Full Stack Developer specializing in MERN Stack, responsive web applications, modern UI/UX, and AI-powered web solutions.",
-    "url": SITE_URL,
-    "sameAs": [
-      "https://github.com/DarshilDoshi123",
-      "https://www.linkedin.com/in/darshiltdoshi"
-    ]
+    "url": SITE_URL
   };
 
   return (
@@ -211,24 +205,6 @@ const Developer = () => {
                 >
                   Request a Quote
                 </button>
-                <a
-                  href="https://github.com/DarshilDoshi123"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-200 rounded-xl px-5 py-3 text-xs font-bold transition-all duration-200 inline-flex items-center gap-1.5"
-                >
-                  <Github className="h-4 w-4" />
-                  <span>View GitHub</span>
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/darshiltdoshi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-200 rounded-xl px-5 py-3 text-xs font-bold transition-all duration-200 inline-flex items-center gap-1.5"
-                >
-                  <Linkedin className="h-4 w-4" />
-                  <span>View LinkedIn</span>
-                </a>
               </div>
             </div>
 
@@ -267,8 +243,7 @@ const Developer = () => {
                       'MongoDB',
                       'REST APIs',
                       'AI Integration',
-                      'Prompt Engineering',
-                      'GitHub'
+                      'Prompt Engineering'
                     ].map((t) => (
                       <span key={t} className="rounded-full border border-slate-200/60 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 px-2 py-0.5 text-[8px] font-extrabold text-slate-500 dark:text-slate-400 hover:border-primary-500/30 hover:bg-white dark:hover:bg-slate-900 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-200">
                         {t}
@@ -445,7 +420,7 @@ const Developer = () => {
             <div className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm space-y-4">
               <span className="text-[9px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider block border-b border-slate-100 dark:border-slate-800 pb-2">Development & SEO</span>
               <div className="flex flex-wrap gap-2">
-                {['Git', 'GitHub', 'Responsive Design', 'SEO Optimization'].map((t) => (
+                {['Git', 'Responsive Design', 'SEO Optimization'].map((t) => (
                   <span key={t} className="bg-slate-50 border border-slate-200 text-slate-700 dark:bg-slate-950 dark:border-slate-850 dark:text-slate-300 px-2.5 py-1 rounded-lg text-[9px] font-extrabold uppercase tracking-wide">
                     {t}
                   </span>
@@ -872,44 +847,6 @@ const Developer = () => {
                 </div>
               </form>
             )}
-          </div>
-        </div>
-      </section>
-
-      {/* ====================================================
-          SECTION 9 — CONNECT
-          ==================================================== */}
-      <section className="py-16 md:py-24 border-t border-slate-100 dark:border-slate-900 bg-slate-50/20 dark:bg-slate-950/20">
-        <div className="mx-auto max-w-5xl px-4 md:px-8">
-          <div className="text-center space-y-3 mb-16">
-            <span className="text-[10px] font-bold text-primary-500 uppercase tracking-widest block">Channels</span>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Connect With Me</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {[
-              { icon: Github, label: 'GitHub', username: 'DarshilDoshi123', link: 'https://github.com/DarshilDoshi123' },
-              { icon: Linkedin, label: 'LinkedIn', username: 'Darshil Doshi', link: 'https://www.linkedin.com/in/darshiltdoshi' }
-            ].map((ch, idx) => {
-              const Icon = ch.icon;
-              return (
-                <a 
-                  key={idx}
-                  href={ch.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm hover:border-primary-500/30 transition-all duration-300 flex items-center space-x-4 animate-fade-in"
-                >
-                  <div className="p-3 rounded-xl bg-primary-500/10 text-primary-600 dark:text-primary-400">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div className="space-y-0.5 min-w-0">
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">{ch.label}</span>
-                    <span className="text-xs font-bold text-slate-800 dark:text-slate-100 break-all">{ch.username}</span>
-                  </div>
-                </a>
-              );
-            })}
           </div>
         </div>
       </section>
